@@ -23,10 +23,12 @@ export default function App() {
             <Route path="/citizen/services" element={<ServicesPage />} />
             <Route path="/citizen/applications" element={<ApplicationsPage />} />
             <Route path="/citizen/applications/:id" element={<ApplicationDetailPage />} />
+            <Route path="/citizen/officer" element={<Navigate to="/officer" replace />} />
             <Route path="/officer" element={<OfficerDashboardPage />} />
             <Route path="/officer/monitoring" element={<MonitoringPage />} />
             <Route path="/officer/service-graph" element={<ServiceGraphPage />} />
             <Route path="/admin/schema-mapper" element={<SchemaMapperPage />} />
+            <Route path="/admin/schemas" element={<Navigate to="/admin/schema-mapper" replace />} />
           </Route>
           <Route path="/" element={<Navigate to="/login" replace />} />
           <Route path="*" element={<Navigate to="/login" replace />} />

@@ -226,12 +226,238 @@ class DemoSimulationAdapter {
       if (typeof window !== "undefined" && window.localStorage) {
         const raw = window.localStorage.getItem(STORAGE_KEY);
         if (raw) {
-          this.inMemoryApplications = JSON.parse(raw);
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            this.inMemoryApplications = parsed;
+            return;
+          }
         }
       }
     } catch {
       // Graceful fallback to in-memory
     }
+
+    // Seed default baseline applications so the Officer Console & Monitoring reflect realistic state
+    if (this.inMemoryApplications.length === 0) {
+      this.inMemoryApplications = this.createDefaultSeededApplications();
+    }
+  }
+
+  private createDefaultSeededApplications(): CanonicalScholarshipApplication[] {
+    const baseTime = Date.now();
+    return [
+      {
+        application_id: "SCH-DEMO-AARAV1",
+        application_reference: "REF-SETU-1001-AARAV",
+        citizen_id: "CIT-1001",
+        student_id: "STU-5001",
+        applicant_name: "Aarav Sharma",
+        date_of_birth: "2003-07-14",
+        course_name: "B.Tech Computer Engineering",
+        institution_name: "Innovexa Institute",
+        annual_income: 240000,
+        financial_year: "2025/26",
+        eligibility_status: "ELIGIBLE",
+        workflow_status: "SUBMITTED",
+        eligibility_details: {
+          is_eligible: true,
+          criteria: [
+            {
+              id: "INCOME_CEILING",
+              name: "Income within threshold",
+              passed: true,
+              requirement: "≤ ₹3,00,000",
+              actual: "₹2,40,000",
+              explanation: "Annual family income is within the policy threshold.",
+            },
+            {
+              id: "ENROLLMENT_STATUS",
+              name: "Active enrollment verified",
+              passed: true,
+              requirement: "ACTIVE or ENROLLED",
+              actual: "ACTIVE",
+              explanation: "Student enrollment verified with Education Department.",
+            },
+            {
+              id: "APPROVED_COURSE",
+              name: "Approved program of study",
+              passed: true,
+              requirement: "Eligible degree/diploma program",
+              actual: "B.Tech Computer Engineering",
+              explanation: "Course aligns with eligible STEM scholarship priority list.",
+            },
+          ],
+          summary: "All eligibility criteria satisfied.",
+          evaluated_at: new Date(baseTime - 3600000).toISOString(),
+        },
+        records_verified: {
+          identity: true,
+          education: true,
+          income: true,
+        },
+        departments_contacted: ["IDENTITY", "EDUCATION", "INCOME", "SCHOLARSHIP"],
+        submission_receipt: {
+          application_id: "SCH-DEMO-AARAV1",
+          application_reference: "REF-SETU-1001-AARAV",
+          status: "RECEIVED",
+          received_at: new Date(baseTime - 3590000).toISOString(),
+          source: "SCHOLARSHIP-LOCAL-SIMULATION",
+        },
+        audit_events: [
+          {
+            id: "aud-aarav-1",
+            timestamp: new Date(baseTime - 3605000).toISOString(),
+            event_type: "consent_granted",
+            details: { purpose: "Scholarship verification", citizen_id: "CIT-1001" },
+          },
+          {
+            id: "aud-aarav-2",
+            timestamp: new Date(baseTime - 3604000).toISOString(),
+            event_type: "department_response_received",
+            department: "IDENTITY",
+            details: { status: "200 OK", field: "aadhaar_name", name: "Aarav Sharma" },
+          },
+          {
+            id: "aud-aarav-3",
+            timestamp: new Date(baseTime - 3603000).toISOString(),
+            event_type: "department_response_received",
+            department: "EDUCATION",
+            details: { status: "200 OK", student_id: "STU-5001", institution: "Innovexa Institute" },
+          },
+          {
+            id: "aud-aarav-4",
+            timestamp: new Date(baseTime - 3602000).toISOString(),
+            event_type: "department_response_received",
+            department: "INCOME",
+            details: { status: "200 OK", annual_income: 240000 },
+          },
+          {
+            id: "aud-aarav-5",
+            timestamp: new Date(baseTime - 3601000).toISOString(),
+            event_type: "normalization_completed",
+            details: { mapping_version: "mapping-registry-v1", models: ["CitizenProfile", "EducationRecord", "IncomeRecord"] },
+          },
+          {
+            id: "aud-aarav-6",
+            timestamp: new Date(baseTime - 3600000).toISOString(),
+            event_type: "eligibility_evaluated",
+            details: { is_eligible: true, passed_criteria: 3 },
+          },
+          {
+            id: "aud-aarav-7",
+            timestamp: new Date(baseTime - 3590000).toISOString(),
+            event_type: "application_submitted",
+            department: "SCHOLARSHIP",
+            details: { application_id: "SCH-DEMO-AARAV1", status: "RECEIVED" },
+          },
+        ],
+        created_at: new Date(baseTime - 3606000).toISOString(),
+        completed_at: new Date(baseTime - 3590000).toISOString(),
+        mode: "demo",
+      },
+      {
+        application_id: "SCH-DEMO-DIYA02",
+        application_reference: "REF-SETU-1002-DIYA",
+        citizen_id: "CIT-1002",
+        student_id: "STU-5002",
+        applicant_name: "Diya Verma",
+        date_of_birth: "2004-03-22",
+        course_name: "B.Sc Data Science",
+        institution_name: "Apex University",
+        annual_income: 315000,
+        financial_year: "2025/26",
+        eligibility_status: "INELIGIBLE",
+        workflow_status: "REJECTED",
+        eligibility_details: {
+          is_eligible: false,
+          criteria: [
+            {
+              id: "INCOME_CEILING",
+              name: "Income within threshold",
+              passed: false,
+              requirement: "≤ ₹3,00,000",
+              actual: "₹3,15,000",
+              explanation: "Annual family income (₹3,15,000) exceeds policy threshold (₹3,00,000).",
+            },
+            {
+              id: "ENROLLMENT_STATUS",
+              name: "Active enrollment verified",
+              passed: true,
+              requirement: "ACTIVE or ENROLLED",
+              actual: "ACTIVE",
+              explanation: "Student enrollment verified with Education Department.",
+            },
+            {
+              id: "APPROVED_COURSE",
+              name: "Approved program of study",
+              passed: true,
+              requirement: "Eligible degree/diploma program",
+              actual: "B.Sc Data Science",
+              explanation: "Course is on the eligible list.",
+            },
+          ],
+          summary: "Applicant family income exceeds the allowable limit of ₹3,00,000.",
+          evaluated_at: new Date(baseTime - 7200000).toISOString(),
+        },
+        records_verified: {
+          identity: true,
+          education: true,
+          income: true,
+        },
+        departments_contacted: ["IDENTITY", "EDUCATION", "INCOME"],
+        submission_receipt: {
+          application_id: "SCH-REJ-DIYA02",
+          application_reference: "REF-SETU-1002-DIYA",
+          status: "REJECTED_INELIGIBLE",
+          received_at: new Date(baseTime - 7190000).toISOString(),
+          source: "SAMANVAYSETU-VALIDATION-GATEWAY",
+        },
+        audit_events: [
+          {
+            id: "aud-diya-1",
+            timestamp: new Date(baseTime - 7205000).toISOString(),
+            event_type: "consent_granted",
+            details: { purpose: "Scholarship verification", citizen_id: "CIT-1002" },
+          },
+          {
+            id: "aud-diya-2",
+            timestamp: new Date(baseTime - 7204000).toISOString(),
+            event_type: "department_response_received",
+            department: "IDENTITY",
+            details: { status: "200 OK", name: "Diya Verma" },
+          },
+          {
+            id: "aud-diya-3",
+            timestamp: new Date(baseTime - 7203000).toISOString(),
+            event_type: "department_response_received",
+            department: "EDUCATION",
+            details: { status: "200 OK", student_id: "STU-5002", institution: "Apex University" },
+          },
+          {
+            id: "aud-diya-4",
+            timestamp: new Date(baseTime - 7202000).toISOString(),
+            event_type: "department_response_received",
+            department: "INCOME",
+            details: { status: "200 OK", annual_income: 315000 },
+          },
+          {
+            id: "aud-diya-5",
+            timestamp: new Date(baseTime - 7201000).toISOString(),
+            event_type: "normalization_completed",
+            details: { mapping_version: "mapping-registry-v1" },
+          },
+          {
+            id: "aud-diya-6",
+            timestamp: new Date(baseTime - 7200000).toISOString(),
+            event_type: "eligibility_evaluated",
+            details: { is_eligible: false, failed_criteria: ["INCOME_CEILING"] },
+          },
+        ],
+        created_at: new Date(baseTime - 7206000).toISOString(),
+        completed_at: new Date(baseTime - 7190000).toISOString(),
+        mode: "demo",
+      },
+    ];
   }
 
   saveApplication(app: CanonicalScholarshipApplication): void {
