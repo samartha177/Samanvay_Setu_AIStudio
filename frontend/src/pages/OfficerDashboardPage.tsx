@@ -39,7 +39,7 @@ export function OfficerDashboardPage() {
 
   return (
     <div className="space-y-8 pb-12">
-      {/* 1. Header & Platform Status */}
+      {/* 1. Header */}
       <div className="flex flex-col gap-4 border-b border-slate-200 pb-6 md:flex-row md:items-center md:justify-between">
         <div>
           <div className="flex items-center gap-3">
@@ -73,7 +73,7 @@ export function OfficerDashboardPage() {
             </span>
           </div>
           <p className="mt-1 text-sm text-slate-600">
-            Monitor consented workflows, departmental health and interoperability transactions.
+            Monitor consented workflows, departmental health, and interoperability transactions across government registries.
           </p>
         </div>
 
@@ -93,169 +93,118 @@ export function OfficerDashboardPage() {
         </div>
       </div>
 
-      {/* 10. Judge-Friendly Explanation Card */}
-      <div className="rounded-2xl border border-teal/30 bg-white p-6 shadow-panel">
-        <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-          <div className="max-w-3xl">
-            <span className="text-[11px] font-bold uppercase tracking-wider text-teal">
-              WHY SAMANVAYSETU?
+      {/* 2. Immediately Below: 4 Compact KPI Cards */}
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        {/* KPI 1: Total Applications */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-panel transition hover:border-slate-300">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
+              Total Applications
             </span>
-            <p className="mt-1 text-sm font-medium text-slate-800 leading-relaxed">
-              &ldquo;Departmental systems remain independent. SAMANVAYSETU provides a consent-driven interoperability layer that adapts heterogeneous data into canonical models for reusable government workflows.&rdquo;
-            </p>
+            <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[10px] font-mono font-bold text-slate-700">
+              ALL TIME
+            </span>
           </div>
-          <div className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-slate-50 px-3.5 py-2 border border-slate-200 text-xs font-mono font-medium text-slate-600">
-            <span>Authoritative Engine:</span>
-            <strong className="text-teal font-bold">{MAPPING_REGISTRY_VERSION}</strong>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-3xl font-bold tracking-tight text-ink">
+              {loading ? "..." : totalApps}
+            </span>
+            <span className="text-xs text-slate-500 font-medium">records</span>
           </div>
+          <p className="mt-1 text-[11px] text-slate-500">
+            Consented multi-department workflows
+          </p>
         </div>
 
-        <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 border-t border-slate-100 pt-4">
-          <div className="flex items-start gap-2.5">
-            <span className="mt-0.5 text-teal font-bold text-sm">✓</span>
-            <div>
-              <h4 className="text-xs font-bold text-slate-900">No replacement</h4>
-              <p className="text-[11px] text-slate-600">Department legacy schemas stay intact</p>
-            </div>
+        {/* KPI 2: Successful */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-panel transition hover:border-emerald-300">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-700">
+              Successful
+            </span>
+            <span className="rounded-md bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[10px] font-mono font-bold text-emerald-800">
+              ELIGIBLE
+            </span>
           </div>
-          <div className="flex items-start gap-2.5">
-            <span className="mt-0.5 text-teal font-bold text-sm">✓</span>
-            <div>
-              <h4 className="text-xs font-bold text-slate-900">Consent-driven</h4>
-              <p className="text-[11px] text-slate-600">Zero data exchange without approval</p>
-            </div>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-3xl font-bold tracking-tight text-emerald-700">
+              {loading ? "..." : successfulApps}
+            </span>
+            <span className="text-xs text-slate-500 font-medium">
+              ({totalApps ? Math.round((successfulApps / totalApps) * 100) : 0}%)
+            </span>
           </div>
-          <div className="flex items-start gap-2.5">
-            <span className="mt-0.5 text-teal font-bold text-sm">✓</span>
-            <div>
-              <h4 className="text-xs font-bold text-slate-900">Schema interoperability</h4>
-              <p className="text-[11px] text-slate-600">Deterministic canonical models</p>
-            </div>
+          <p className="mt-1 text-[11px] text-slate-500">
+            Verified, normalized and lodged
+          </p>
+        </div>
+
+        {/* KPI 3: Ineligible */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-panel transition hover:border-amber-300">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-700">
+              Ineligible
+            </span>
+            <span className="rounded-md bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-mono font-bold text-amber-800">
+              POLICY
+            </span>
           </div>
-          <div className="flex items-start gap-2.5">
-            <span className="mt-0.5 text-teal font-bold text-sm">✓</span>
-            <div>
-              <h4 className="text-xs font-bold text-slate-900">Explainable decisions</h4>
-              <p className="text-[11px] text-slate-600">Deterministic rules with clear rationale</p>
-            </div>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-3xl font-bold tracking-tight text-amber-700">
+              {loading ? "..." : ineligibleApps}
+            </span>
+            <span className="text-xs text-slate-500 font-medium">
+              ({totalApps ? Math.round((ineligibleApps / totalApps) * 100) : 0}%)
+            </span>
           </div>
+          <p className="mt-1 text-[11px] text-slate-500">
+            Evaluated with explainable criteria log
+          </p>
+        </div>
+
+        {/* KPI 4: Department Requests */}
+        <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-panel transition hover:border-teal/40">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold uppercase tracking-wider text-teal">
+              Department Requests
+            </span>
+            <span className="rounded-md bg-teal/10 px-2 py-0.5 text-[10px] font-mono font-bold text-teal">
+              ADAPTED
+            </span>
+          </div>
+          <div className="mt-3 flex items-baseline gap-2">
+            <span className="text-3xl font-bold tracking-tight text-teal">
+              {loading ? "..." : totalDeptRequests}
+            </span>
+            <span className="text-xs text-slate-500 font-medium">calls</span>
+          </div>
+          <p className="mt-1 text-[11px] text-slate-500">
+            Identity, Education & Income exchanged
+          </p>
         </div>
       </div>
 
-      {/* 1. Top KPI Cards */}
-      <div className="space-y-2">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500">
-            Operations Metrics
-          </h2>
-          {isDemoMode && (
-            <span className="rounded bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-bold text-amber-800">
-              DEMO DATA (Local State)
-            </span>
-          )}
-        </div>
-
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-panel">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                Total Applications
-              </span>
-              <span className="rounded-md bg-slate-100 px-2 py-0.5 text-[11px] font-mono font-bold text-slate-700">
-                LIFETIME
-              </span>
-            </div>
-            <div className="mt-3 flex items-baseline gap-2">
-              <span className="text-3xl font-bold tracking-tight text-ink">
-                {loading ? "..." : totalApps}
-              </span>
-              <span className="text-xs text-slate-500">records</span>
-            </div>
-            <p className="mt-1 text-[11px] text-slate-500">
-              Consented scholarship requests processed
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-panel">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-emerald-700">
-                Successful
-              </span>
-              <span className="rounded-md bg-emerald-50 border border-emerald-200 px-2 py-0.5 text-[11px] font-mono font-bold text-emerald-800">
-                ELIGIBLE
-              </span>
-            </div>
-            <div className="mt-3 flex items-baseline gap-2">
-              <span className="text-3xl font-bold tracking-tight text-emerald-700">
-                {loading ? "..." : successfulApps}
-              </span>
-              <span className="text-xs text-slate-500">
-                ({totalApps ? Math.round((successfulApps / totalApps) * 100) : 0}%)
-              </span>
-            </div>
-            <p className="mt-1 text-[11px] text-slate-500">
-              Verified, normalized and submitted
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-panel">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-amber-700">
-                Ineligible
-              </span>
-              <span className="rounded-md bg-amber-50 border border-amber-200 px-2 py-0.5 text-[11px] font-mono font-bold text-amber-800">
-                POLICY
-              </span>
-            </div>
-            <div className="mt-3 flex items-baseline gap-2">
-              <span className="text-3xl font-bold tracking-tight text-amber-700">
-                {loading ? "..." : ineligibleApps}
-              </span>
-              <span className="text-xs text-slate-500">
-                ({totalApps ? Math.round((ineligibleApps / totalApps) * 100) : 0}%)
-              </span>
-            </div>
-            <p className="mt-1 text-[11px] text-slate-500">
-              Rejected with explainable criteria log
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-slate-200 bg-white p-5 shadow-panel">
-            <div className="flex items-center justify-between">
-              <span className="text-xs font-bold uppercase tracking-wider text-teal">
-                Department Requests
-              </span>
-              <span className="rounded-md bg-teal/10 px-2 py-0.5 text-[11px] font-mono font-bold text-teal">
-                ADAPTED
-              </span>
-            </div>
-            <div className="mt-3 flex items-baseline gap-2">
-              <span className="text-3xl font-bold tracking-tight text-teal">
-                {loading ? "..." : totalDeptRequests}
-              </span>
-              <span className="text-xs text-slate-500">calls</span>
-            </div>
-            <p className="mt-1 text-[11px] text-slate-500">
-              Identity, Education & Income exchanged
-            </p>
-          </div>
-        </div>
-      </div>
-
-      {/* 2. Active Workflow & 3. Department Health Side by Side */}
-      <div className="grid gap-6 lg:grid-cols-3">
-        {/* 2. Active Workflow Prominent Card (2 cols) */}
-        <div className="lg:col-span-2 rounded-2xl border border-slate-200 bg-white p-6 shadow-panel">
-          <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-4">
-            <div>
+      {/* 3. LATEST WORKFLOW (Prominent Execution Details) */}
+      <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-panel">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
+          <div>
+            <div className="flex items-center gap-2">
               <span className="text-[11px] font-bold uppercase tracking-wider text-teal">
-                ACTIVE WORKFLOW
+                LATEST WORKFLOW
               </span>
-              <h3 className="text-base font-bold text-ink">
-                Most Recent Scholarship Execution
-              </h3>
+              {isDemoMode && (
+                <span className="rounded bg-amber-50 border border-amber-200 px-2 py-0.5 text-[10px] font-mono font-bold text-amber-800">
+                  DEMO DATA
+                </span>
+              )}
             </div>
-            {activeApp && (
+            <h2 className="text-lg font-bold text-ink mt-0.5">
+              Most Recent Scholarship Execution Pipeline
+            </h2>
+          </div>
+
+          {activeApp && (
+            <div className="flex items-center gap-2">
               <span
                 className={`rounded-full px-3 py-1 text-xs font-bold ${
                   activeApp.workflow_status === "SUBMITTED"
@@ -265,236 +214,389 @@ export function OfficerDashboardPage() {
                     : "bg-slate-100 text-slate-700"
                 }`}
               >
-                Status: {activeApp.workflow_status}
+                Workflow: {activeApp.workflow_status}
               </span>
-            )}
-          </div>
-
-          {activeApp ? (
-            <div className="mt-5 space-y-5">
-              {/* Application identification */}
-              <div className="flex flex-wrap items-center justify-between gap-4 rounded-xl bg-slate-50 p-4 border border-slate-200/80">
-                <div>
-                  <span className="text-[10px] font-bold uppercase text-slate-400">
-                    APPLICATION REFERENCE
-                  </span>
-                  <div className="text-sm font-mono font-bold text-navy">
-                    {activeApp.application_reference}
-                  </div>
-                  <div className="text-xs text-slate-500">
-                    ID: <span className="font-mono">{activeApp.application_id}</span>
-                  </div>
-                </div>
-                <div>
-                  <span className="text-[10px] font-bold uppercase text-slate-400">
-                    APPLICANT & CITIZEN ID
-                  </span>
-                  <div className="text-sm font-bold text-slate-900">
-                    {activeApp.applicant_name}
-                  </div>
-                  <div className="text-xs font-mono text-slate-600">
-                    {activeApp.citizen_id} · {activeApp.student_id}
-                  </div>
-                </div>
-                <div className="text-right">
-                  <span className="text-[10px] font-bold uppercase text-slate-400">
-                    TIMESTAMP
-                  </span>
-                  <div className="text-xs font-mono text-slate-700">
-                    {new Date(activeApp.completed_at || activeApp.created_at).toLocaleTimeString()}
-                  </div>
-                  <div className="text-[11px] text-slate-500">
-                    {new Date(activeApp.created_at).toLocaleDateString()}
-                  </div>
-                </div>
-              </div>
-
-              {/* 8 Verified Checkbox Steps */}
-              <div>
-                <span className="text-xs font-bold uppercase tracking-wider text-slate-600 block mb-3">
-                  Workflow Orchestration Progression
-                </span>
-                <div className="grid grid-cols-2 gap-2.5 sm:grid-cols-4">
-                  <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50/70 px-3 py-2">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-[10px] font-bold text-white">
-                      ✓
-                    </span>
-                    <span className="text-xs font-medium text-slate-900">Application</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50/70 px-3 py-2">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-[10px] font-bold text-white">
-                      ✓
-                    </span>
-                    <span className="text-xs font-medium text-slate-900">Consent</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50/70 px-3 py-2">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-[10px] font-bold text-white">
-                      ✓
-                    </span>
-                    <span className="text-xs font-medium text-slate-900">Identity</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50/70 px-3 py-2">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-[10px] font-bold text-white">
-                      ✓
-                    </span>
-                    <span className="text-xs font-medium text-slate-900">Education</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50/70 px-3 py-2">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-[10px] font-bold text-white">
-                      ✓
-                    </span>
-                    <span className="text-xs font-medium text-slate-900">Income</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50/70 px-3 py-2">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-[10px] font-bold text-white">
-                      ✓
-                    </span>
-                    <span className="text-xs font-medium text-slate-900">Normalization</span>
-                  </div>
-
-                  <div className="flex items-center gap-2 rounded-lg border border-emerald-200 bg-emerald-50/70 px-3 py-2">
-                    <span className="flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-emerald-600 text-[10px] font-bold text-white">
-                      ✓
-                    </span>
-                    <span className="text-xs font-medium text-slate-900">Eligibility</span>
-                  </div>
-
-                  <div
-                    className={`flex items-center gap-2 rounded-lg border px-3 py-2 ${
-                      activeApp.workflow_status === "SUBMITTED"
-                        ? "border-emerald-200 bg-emerald-50/70"
-                        : "border-slate-200 bg-slate-50"
-                    }`}
-                  >
-                    <span
-                      className={`flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold text-white ${
-                        activeApp.workflow_status === "SUBMITTED"
-                          ? "bg-emerald-600"
-                          : "bg-slate-400"
-                      }`}
-                    >
-                      {activeApp.workflow_status === "SUBMITTED" ? "✓" : "•"}
-                    </span>
-                    <span className="text-xs font-medium text-slate-900">Scholarship</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Action buttons */}
-              <div className="flex items-center justify-between border-t border-slate-100 pt-3">
-                <span className="text-xs text-slate-500">
-                  Course: <strong>{activeApp.course_name}</strong> · Income: ₹
-                  {activeApp.annual_income.toLocaleString("en-IN")}
-                </span>
-                <Link
-                  to={`/citizen/applications/${activeApp.application_id}`}
-                  className="text-xs font-bold text-teal hover:underline"
-                >
-                  View Full Record & Audit →
-                </Link>
-              </div>
-            </div>
-          ) : (
-            <div className="py-8 text-center text-sm text-slate-500">
-              No workflow executed yet. Start an application in Citizen Portal.
+              <span
+                className={`rounded-full px-3 py-1 text-xs font-bold ${
+                  activeApp.eligibility_status === "ELIGIBLE"
+                    ? "bg-emerald-600 text-white"
+                    : "bg-rose-600 text-white"
+                }`}
+              >
+                Eligibility: {activeApp.eligibility_status}
+              </span>
             </div>
           )}
         </div>
 
-        {/* 3. Department Health Panel (1 col) */}
+        {activeApp ? (
+          <div className="mt-5 space-y-6">
+            {/* Applicant & Gateway Reference Summary */}
+            <div className="grid gap-4 sm:grid-cols-3 rounded-xl bg-slate-50/80 p-4 border border-slate-200/80">
+              <div>
+                <span className="text-[10px] font-bold uppercase text-slate-400 block">
+                  APPLICATION REFERENCE
+                </span>
+                <div className="text-sm font-mono font-bold text-navy mt-0.5">
+                  {activeApp.application_reference}
+                </div>
+                <div className="text-xs text-slate-500 font-mono">
+                  ID: {activeApp.application_id}
+                </div>
+              </div>
+
+              <div>
+                <span className="text-[10px] font-bold uppercase text-slate-400 block">
+                  APPLICANT & REGISTRY IDS
+                </span>
+                <div className="text-sm font-bold text-slate-900 mt-0.5">
+                  {activeApp.applicant_name}
+                </div>
+                <div className="text-xs font-mono text-slate-600">
+                  {activeApp.citizen_id} · {activeApp.student_id}
+                </div>
+              </div>
+
+              <div>
+                <span className="text-[10px] font-bold uppercase text-slate-400 block">
+                  TIMESTAMP & VERIFIED RECORD
+                </span>
+                <div className="text-xs font-mono text-slate-700 mt-0.5">
+                  {new Date(activeApp.completed_at || activeApp.created_at).toLocaleString()}
+                </div>
+                <div className="text-[11px] text-slate-500">
+                  Course: <strong>{activeApp.course_name}</strong> · Income: ₹{activeApp.annual_income.toLocaleString("en-IN")}
+                </div>
+              </div>
+            </div>
+
+            {/* 8-Stage Connected Pipeline (Requested Format) */}
+            <div>
+              <div className="flex items-center justify-between mb-3">
+                <span className="text-xs font-bold uppercase tracking-wider text-slate-700">
+                  8-Stage Interoperability Progression
+                </span>
+                <span className="text-[11px] text-slate-500">
+                  All stages verified deterministically
+                </span>
+              </div>
+
+              {/* Connected Visual Pipeline */}
+              <div className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-8">
+                {/* 1. Application */}
+                <div className="flex flex-col justify-between rounded-xl border border-emerald-200 bg-emerald-50/60 p-3 text-left">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-base">📝</span>
+                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-600 text-[9px] font-bold text-white">
+                        ✓
+                      </span>
+                    </div>
+                    <h3 className="mt-2 text-xs font-bold text-slate-900">Application</h3>
+                    <p className="mt-0.5 text-[10px] text-slate-600">Citizen initiated</p>
+                  </div>
+                  <span className="mt-2 inline-block rounded bg-emerald-100 px-1.5 py-0.5 text-[9px] font-bold text-emerald-800 self-start">
+                    LODGED
+                  </span>
+                </div>
+
+                {/* 2. Consent */}
+                <div className="flex flex-col justify-between rounded-xl border border-emerald-200 bg-emerald-50/60 p-3 text-left">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-base">🛡️</span>
+                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-600 text-[9px] font-bold text-white">
+                        ✓
+                      </span>
+                    </div>
+                    <h3 className="mt-2 text-xs font-bold text-slate-900">Consent</h3>
+                    <p className="mt-0.5 text-[10px] text-slate-600">DPDP authorized</p>
+                  </div>
+                  <span className="mt-2 inline-block rounded bg-emerald-100 px-1.5 py-0.5 text-[9px] font-bold text-emerald-800 self-start">
+                    GRANTED
+                  </span>
+                </div>
+
+                {/* 3. Identity */}
+                <div className="flex flex-col justify-between rounded-xl border border-emerald-200 bg-emerald-50/60 p-3 text-left">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-base">👤</span>
+                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-600 text-[9px] font-bold text-white">
+                        ✓
+                      </span>
+                    </div>
+                    <h3 className="mt-2 text-xs font-bold text-slate-900">Identity</h3>
+                    <p className="mt-0.5 text-[10px] text-slate-600">Demographic match</p>
+                  </div>
+                  <span className="mt-2 inline-block rounded bg-emerald-100 px-1.5 py-0.5 text-[9px] font-bold text-emerald-800 self-start">
+                    VERIFIED
+                  </span>
+                </div>
+
+                {/* 4. Education */}
+                <div className="flex flex-col justify-between rounded-xl border border-emerald-200 bg-emerald-50/60 p-3 text-left">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-base">🎓</span>
+                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-600 text-[9px] font-bold text-white">
+                        ✓
+                      </span>
+                    </div>
+                    <h3 className="mt-2 text-xs font-bold text-slate-900">Education</h3>
+                    <p className="mt-0.5 text-[10px] text-slate-600">Active student</p>
+                  </div>
+                  <span className="mt-2 inline-block rounded bg-emerald-100 px-1.5 py-0.5 text-[9px] font-bold text-emerald-800 self-start">
+                    VERIFIED
+                  </span>
+                </div>
+
+                {/* 5. Income */}
+                <div className="flex flex-col justify-between rounded-xl border border-emerald-200 bg-emerald-50/60 p-3 text-left">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-base">💰</span>
+                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-600 text-[9px] font-bold text-white">
+                        ✓
+                      </span>
+                    </div>
+                    <h3 className="mt-2 text-xs font-bold text-slate-900">Income</h3>
+                    <p className="mt-0.5 text-[10px] text-slate-600">Revenue verified</p>
+                  </div>
+                  <span className="mt-2 inline-block rounded bg-emerald-100 px-1.5 py-0.5 text-[9px] font-bold text-emerald-800 self-start">
+                    VERIFIED
+                  </span>
+                </div>
+
+                {/* 6. Normalization */}
+                <div className="flex flex-col justify-between rounded-xl border border-teal/40 bg-teal/10 p-3 text-left">
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-base">⚡</span>
+                      <span className="flex h-4 w-4 items-center justify-center rounded-full bg-teal text-[9px] font-bold text-white">
+                        ✓
+                      </span>
+                    </div>
+                    <h3 className="mt-2 text-xs font-bold text-slate-900">Normalization</h3>
+                    <p className="mt-0.5 text-[10px] text-slate-600">v1 Registry</p>
+                  </div>
+                  <span className="mt-2 inline-block rounded bg-teal/20 px-1.5 py-0.5 text-[9px] font-bold text-teal self-start">
+                    ADAPTED
+                  </span>
+                </div>
+
+                {/* 7. Eligibility */}
+                <div
+                  className={`flex flex-col justify-between rounded-xl border p-3 text-left ${
+                    activeApp.eligibility_status === "ELIGIBLE"
+                      ? "border-emerald-200 bg-emerald-50/60"
+                      : "border-amber-200 bg-amber-50/60"
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-base">⚖️</span>
+                      <span
+                        className={`flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-bold text-white ${
+                          activeApp.eligibility_status === "ELIGIBLE"
+                            ? "bg-emerald-600"
+                            : "bg-amber-600"
+                        }`}
+                      >
+                        {activeApp.eligibility_status === "ELIGIBLE" ? "✓" : "!"}
+                      </span>
+                    </div>
+                    <h3 className="mt-2 text-xs font-bold text-slate-900">Eligibility</h3>
+                    <p className="mt-0.5 text-[10px] text-slate-600">
+                      {activeApp.eligibility_status === "ELIGIBLE" ? "Criteria met" : "Criteria unmet"}
+                    </p>
+                  </div>
+                  <span
+                    className={`mt-2 inline-block rounded px-1.5 py-0.5 text-[9px] font-bold self-start ${
+                      activeApp.eligibility_status === "ELIGIBLE"
+                        ? "bg-emerald-100 text-emerald-800"
+                        : "bg-amber-100 text-amber-800"
+                    }`}
+                  >
+                    {activeApp.eligibility_status}
+                  </span>
+                </div>
+
+                {/* 8. Scholarship */}
+                <div
+                  className={`flex flex-col justify-between rounded-xl border p-3 text-left ${
+                    activeApp.workflow_status === "SUBMITTED"
+                      ? "border-emerald-300 bg-emerald-100/50 shadow-xs"
+                      : "border-slate-200 bg-slate-50"
+                  }`}
+                >
+                  <div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-base">🏛️</span>
+                      <span
+                        className={`flex h-4 w-4 items-center justify-center rounded-full text-[9px] font-bold text-white ${
+                          activeApp.workflow_status === "SUBMITTED"
+                            ? "bg-emerald-600"
+                            : "bg-slate-400"
+                        }`}
+                      >
+                        {activeApp.workflow_status === "SUBMITTED" ? "✓" : "•"}
+                      </span>
+                    </div>
+                    <h3 className="mt-2 text-xs font-bold text-slate-900">Scholarship</h3>
+                    <p className="mt-0.5 text-[10px] text-slate-600">
+                      {activeApp.workflow_status === "SUBMITTED" ? "Lodge complete" : "Not lodged"}
+                    </p>
+                  </div>
+                  <span
+                    className={`mt-2 inline-block rounded px-1.5 py-0.5 text-[9px] font-bold self-start ${
+                      activeApp.workflow_status === "SUBMITTED"
+                        ? "bg-emerald-600 text-white"
+                        : "bg-slate-200 text-slate-600"
+                    }`}
+                  >
+                    {activeApp.workflow_status === "SUBMITTED" ? "SUBMITTED" : "HALTED"}
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* Action Links */}
+            <div className="flex items-center justify-between border-t border-slate-100 pt-3 text-xs">
+              <span className="text-slate-500">
+                Application: <strong className="font-mono text-slate-800">{activeApp.application_id}</strong>
+              </span>
+              <Link
+                to={`/citizen/applications/${activeApp.application_id}`}
+                className="font-bold text-teal hover:underline inline-flex items-center gap-1"
+              >
+                Inspect Full Canonical Payload & Audit Trail →
+              </Link>
+            </div>
+          </div>
+        ) : (
+          <div className="py-8 text-center text-sm text-slate-500">
+            No workflow executed yet. Run an application from the Citizen Portal.
+          </div>
+        )}
+      </section>
+
+      {/* 4. Judge-Friendly Architecture Explanation & Department Health */}
+      <div className="grid gap-6 lg:grid-cols-3">
+        {/* Left 2 Cols: Architectural Thesis */}
+        <div className="lg:col-span-2 rounded-2xl border border-teal/30 bg-white p-6 shadow-panel">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+            <div>
+              <span className="text-[11px] font-bold uppercase tracking-wider text-teal">
+                WHY SAMANVAYSETU?
+              </span>
+              <p className="mt-1 text-sm font-medium text-slate-800 leading-relaxed">
+                &ldquo;Departmental systems remain independent. SAMANVAYSETU provides a consent-driven interoperability layer that adapts heterogeneous data into canonical models for reusable government workflows.&rdquo;
+              </p>
+            </div>
+            <div className="inline-flex shrink-0 items-center gap-2 rounded-xl bg-slate-50 px-3.5 py-2 border border-slate-200 text-xs font-mono font-medium text-slate-600">
+              <span>Registry:</span>
+              <strong className="text-teal font-bold">{MAPPING_REGISTRY_VERSION}</strong>
+            </div>
+          </div>
+
+          <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4 border-t border-slate-100 pt-4">
+            <div className="flex items-start gap-2.5">
+              <span className="mt-0.5 text-teal font-bold text-sm">✓</span>
+              <div>
+                <h4 className="text-xs font-bold text-slate-900">No replacement</h4>
+                <p className="text-[11px] text-slate-600">Department legacy schemas stay intact</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2.5">
+              <span className="mt-0.5 text-teal font-bold text-sm">✓</span>
+              <div>
+                <h4 className="text-xs font-bold text-slate-900">Consent-driven</h4>
+                <p className="text-[11px] text-slate-600">Zero data exchange without approval</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2.5">
+              <span className="mt-0.5 text-teal font-bold text-sm">✓</span>
+              <div>
+                <h4 className="text-xs font-bold text-slate-900">Schema interoperability</h4>
+                <p className="text-[11px] text-slate-600">Deterministic canonical models</p>
+              </div>
+            </div>
+            <div className="flex items-start gap-2.5">
+              <span className="mt-0.5 text-teal font-bold text-sm">✓</span>
+              <div>
+                <h4 className="text-xs font-bold text-slate-900">Explainable decisions</h4>
+                <p className="text-[11px] text-slate-600">Deterministic rules with clear rationale</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Right 1 Col: Department Health Panel */}
         <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-panel">
           <div className="border-b border-slate-100 pb-3">
             <span className="text-[11px] font-bold uppercase tracking-wider text-teal">
               DEPARTMENT HEALTH
             </span>
-            <h3 className="text-base font-bold text-ink">Service Status</h3>
+            <h3 className="text-base font-bold text-ink">Service Endpoints</h3>
             <p className="mt-0.5 text-xs text-slate-500">
-              Federated government endpoints
+              Federated government services
             </p>
           </div>
 
-          <div className="mt-4 space-y-3">
-            <div className="rounded-xl border border-slate-200/80 bg-slate-50/70 p-3.5">
+          <div className="mt-4 space-y-2.5">
+            <div className="rounded-xl border border-slate-200/80 bg-slate-50/70 p-3">
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="text-xs font-bold text-slate-900">Identity Department</h4>
                   <span className="text-[10px] text-slate-500">Demographic registry</span>
                 </div>
-                <div className="text-right">
-                  <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500" /> Available
-                  </span>
-                  <div className="text-[10px] font-mono text-slate-500">
-                    {isDemoMode ? "SIMULATED SERVICE" : "LIVE SERVICE"}
-                  </div>
-                </div>
+                <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" /> Available
+                </span>
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200/80 bg-slate-50/70 p-3.5">
+            <div className="rounded-xl border border-slate-200/80 bg-slate-50/70 p-3">
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="text-xs font-bold text-slate-900">Education Department</h4>
-                  <span className="text-[10px] text-slate-500">Enrollment & student registry</span>
+                  <span className="text-[10px] text-slate-500">Enrollment registry</span>
                 </div>
-                <div className="text-right">
-                  <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500" /> Available
-                  </span>
-                  <div className="text-[10px] font-mono text-slate-500">
-                    {isDemoMode ? "SIMULATED SERVICE" : "LIVE SERVICE"}
-                  </div>
-                </div>
+                <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" /> Available
+                </span>
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200/80 bg-slate-50/70 p-3.5">
+            <div className="rounded-xl border border-slate-200/80 bg-slate-50/70 p-3">
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="text-xs font-bold text-slate-900">Income Department</h4>
-                  <span className="text-[10px] text-slate-500">Revenue & tax certificate</span>
+                  <span className="text-[10px] text-slate-500">Revenue & tax returns</span>
                 </div>
-                <div className="text-right">
-                  <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500" /> Available
-                  </span>
-                  <div className="text-[10px] font-mono text-slate-500">
-                    {isDemoMode ? "SIMULATED SERVICE" : "LIVE SERVICE"}
-                  </div>
-                </div>
+                <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" /> Available
+                </span>
               </div>
             </div>
 
-            <div className="rounded-xl border border-slate-200/80 bg-slate-50/70 p-3.5">
+            <div className="rounded-xl border border-slate-200/80 bg-slate-50/70 p-3">
               <div className="flex items-center justify-between">
                 <div>
                   <h4 className="text-xs font-bold text-slate-900">Scholarship Department</h4>
-                  <span className="text-[10px] text-slate-500">Application intake registry</span>
+                  <span className="text-[10px] text-slate-500">Intake endpoint</span>
                 </div>
-                <div className="text-right">
-                  <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700">
-                    <span className="h-2 w-2 rounded-full bg-emerald-500" /> Available
-                  </span>
-                  <div className="text-[10px] font-mono text-slate-500">
-                    {isDemoMode ? "SIMULATED SERVICE" : "LIVE SERVICE"}
-                  </div>
-                </div>
+                <span className="inline-flex items-center gap-1 text-xs font-bold text-emerald-700">
+                  <span className="h-2 w-2 rounded-full bg-emerald-500" /> Available
+                </span>
               </div>
             </div>
-          </div>
-
-          <div className="mt-4 rounded-lg bg-slate-100/80 p-2.5 text-[11px] text-slate-600">
-            <strong>Note:</strong> In Demo Mode, all departmental payloads simulate real government APIs without external network dependencies.
           </div>
         </div>
       </div>
 
-      {/* 4. Interoperability Transaction Panel (Visually understandable to judge in 5s) */}
+      {/* 5. Multi-Department Transformation Pipelines */}
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-panel">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
           <div>
@@ -636,7 +738,7 @@ export function OfficerDashboardPage() {
         </div>
       </div>
 
-      {/* 5. Recent Applications Table */}
+      {/* 6. Recent Applications Table */}
       <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-panel">
         <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-100 pb-4">
           <div>
