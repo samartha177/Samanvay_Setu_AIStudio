@@ -33,17 +33,23 @@ import {
 export interface SimulatedCitizen {
   citizen_id: string;
   full_name: string;
+  aadhaar_name?: string;
   dob: string;
-  mobile: string;
+  mobile?: string;
 }
 
 export interface SimulatedStudent {
   studentId: string;
+  student_id?: string;
   studentName: string;
   birthDate: string;
+  dateOfBirth?: string;
   courseName: string;
+  course?: string;
   institutionName: string;
-  verification: {
+  institution?: string;
+  enrollment_status?: string;
+  verification?: {
     recordStatus: string;
     sourceSystem: string;
   };
@@ -52,8 +58,10 @@ export interface SimulatedStudent {
 export interface SimulatedIncome {
   applicant_name: string;
   annual_income: number;
+  annual_family_income?: number;
+  income_certificate_no?: string;
   financial_year: string;
-  query: {
+  query?: {
     lookupKey: string;
     registry: string;
   };
@@ -100,12 +108,14 @@ class DemoSimulationAdapter {
   private readonly seedCitizens: Record<string, SimulatedCitizen> = {
     "CIT-1001": {
       citizen_id: "CIT-1001",
+      aadhaar_name: "Aarav Sharma",
       full_name: "Aarav Sharma",
       dob: "2003-07-14",
       mobile: "9999999999",
     },
     "CIT-1002": {
       citizen_id: "CIT-1002",
+      aadhaar_name: "Diya Verma",
       full_name: "Diya Verma",
       dob: "2004-11-02",
       mobile: "9888888888",
@@ -115,10 +125,15 @@ class DemoSimulationAdapter {
   private readonly seedStudents: Record<string, SimulatedStudent> = {
     "STU-5001": {
       studentId: "STU-5001",
+      student_id: "STU-5001",
       studentName: "Aarav Sharma",
+      dateOfBirth: "2003-07-14",
       birthDate: "14/07/2003",
+      course: "B.Tech Computer Engineering",
       courseName: "B.Tech Computer Engineering",
+      institution: "Innovexa Institute",
       institutionName: "Innovexa Institute",
+      enrollment_status: "ACTIVE",
       verification: {
         recordStatus: "ACTIVE",
         sourceSystem: "EDU-SIS",
@@ -126,10 +141,15 @@ class DemoSimulationAdapter {
     },
     "STU-5002": {
       studentId: "STU-5002",
+      student_id: "STU-5002",
       studentName: "Diya Verma",
+      dateOfBirth: "2004-11-02",
       birthDate: "02/11/2004",
+      course: "B.Sc Data Science",
       courseName: "B.Sc Data Science",
+      institution: "Innovexa Institute",
       institutionName: "Innovexa Institute",
+      enrollment_status: "ACTIVE",
       verification: {
         recordStatus: "ACTIVE",
         sourceSystem: "EDU-SIS",
@@ -141,7 +161,9 @@ class DemoSimulationAdapter {
     "CIT-1001": {
       applicant_name: "Aarav Sharma",
       annual_income: 240000,
-      financial_year: "FY 2025/26",
+      annual_family_income: 240000,
+      income_certificate_no: "INC-5001",
+      financial_year: "2025/26",
       query: {
         lookupKey: "CIT-1001",
         registry: "ITR-DEMO",
@@ -150,7 +172,9 @@ class DemoSimulationAdapter {
     "CIT-1002": {
       applicant_name: "Diya Verma",
       annual_income: 315000,
-      financial_year: "FY 2025/26",
+      annual_family_income: 315000,
+      income_certificate_no: "INC-5002",
+      financial_year: "2025/26",
       query: {
         lookupKey: "CIT-1002",
         registry: "ITR-DEMO",

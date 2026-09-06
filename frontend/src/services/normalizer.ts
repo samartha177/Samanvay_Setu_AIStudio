@@ -48,17 +48,22 @@ export function normalizeIdentityRecord(raw: any, citizenId: string): CitizenPro
   }
 
   const rawId = raw.citizen_id || raw.citizenId || citizenId;
-  const rawName = raw.full_name || raw.fullName || raw.name;
+  const rawName = raw.aadhaar_name || raw.full_name || raw.fullName || raw.name;
   const rawDob = raw.dob || raw.date_of_birth || raw.birthDate;
 
   if (!rawName) {
     throw new Error("Identity Department record missing person name.");
   }
 
+  const cleanName = String(rawName).trim();
+  const cleanDob = normalizeDateOfBirth(String(rawDob));
+  const cleanId = String(rawId).trim();
+
   return {
-    citizen_id: String(rawId).trim(),
-    full_name: String(rawName).trim(),
-    date_of_birth: normalizeDateOfBirth(String(rawDob)),
+    citizen_id: cleanId,
+    full_name: cleanName,
+    name: cleanName,
+    date_of_birth: cleanDob,
     mobile: raw.mobile ? String(raw.mobile).trim() : undefined,
   };
 }
@@ -74,24 +79,30 @@ export function normalizeEducationRecord(raw: any, citizenId: string): Education
   const student = raw.student || raw;
   const verification = raw.verification || {};
 
-  const studentId = student.studentId || student.student_id || student.id;
+  const studentId = student.student_id || student.studentId || student.id;
   const studentName = student.studentName || student.student_name || student.name;
-  const birthDate = student.birthDate || student.dob || student.date_of_birth;
-  const courseName = student.courseName || student.course_name || student.course;
-  const institutionName = student.institutionName || student.institution_name || student.institution;
-  const enrollmentStatus = verification.recordStatus || verification.status || student.status || "ACTIVE";
+  const birthDate = student.dateOfBirth || student.birthDate || student.dob || student.date_of_birth;
+  const courseName = student.course || student.courseName || student.course_name;
+  const institutionName = student.institution || student.institutionName || student.institution_name;
+  const enrollmentStatus = student.enrollment_status || verification.recordStatus || verification.status || student.status || "ACTIVE";
 
   if (!studentName || !courseName) {
     throw new Error("Education Department record missing student name or course information.");
   }
 
+  const cleanStudentName = String(studentName).trim();
+  const cleanCourse = String(courseName).trim();
+  const cleanInst = String(institutionName || "Unknown Institution").trim();
+
   return {
     citizen_id: citizenId.trim(),
     student_id: String(studentId || "UNKNOWN").trim(),
-    student_name: String(studentName).trim(),
+    student_name: cleanStudentName,
     date_of_birth: normalizeDateOfBirth(String(birthDate || "")),
-    course_name: String(courseName).trim(),
-    institution_name: String(institutionName || "Unknown Institution").trim(),
+    course_name: cleanCourse,
+    course: cleanCourse,
+    institution_name: cleanInst,
+    institution: cleanInst,
     enrollment_status: String(enrollmentStatus).toUpperCase().trim(),
   };
 }
@@ -106,8 +117,9 @@ export function normalizeIncomeRecord(raw: any, citizenId: string): IncomeRecord
 
   const record = raw.income_record || raw.record || raw;
   const applicantName = record.applicant_name || record.applicantName || record.name;
-  const annualIncome = record.annual_income ?? record.annualIncome ?? record.income;
-  const financialYear = record.financial_year || record.financialYear || record.fy || "FY 2025/26";
+  const annualIncome = record.annual_family_income ?? record.annual_income ?? record.annualIncome ?? record.income;
+  const certNo = record.income_certificate_no || record.certificate_number || record.cert_no;
+  const financialYear = record.financial_year || record.financialYear || record.fy || "2025/26";
 
   if (annualIncome === undefined || annualIncome === null) {
     throw new Error("Income Department record missing annual income figure.");
@@ -118,11 +130,16 @@ export function normalizeIncomeRecord(raw: any, citizenId: string): IncomeRecord
     throw new Error(`Income value "${annualIncome}" is not a valid number.`);
   }
 
+  const formattedFy = String(financialYear).startsWith("FY ") ? String(financialYear) : `FY ${financialYear}`;
+
   return {
     citizen_id: citizenId.trim(),
     applicant_name: String(applicantName || "").trim(),
     annual_income: numericIncome,
-    financial_year: String(financialYear).trim(),
+    annual_family_income: numericIncome,
+    certificate_number: certNo ? String(certNo).trim() : undefined,
+    income_certificate_no: certNo ? String(certNo).trim() : undefined,
+    financial_year: formattedFy,
   };
 }
 

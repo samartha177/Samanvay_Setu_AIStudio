@@ -9,6 +9,7 @@
 export interface CitizenProfile {
   citizen_id: string;
   full_name: string;
+  name?: string; // alias for display
   date_of_birth: string; // ISO 8601 YYYY-MM-DD
   mobile?: string;
 }
@@ -19,7 +20,9 @@ export interface EducationRecord {
   student_name: string;
   date_of_birth: string; // ISO 8601 YYYY-MM-DD
   course_name: string;
+  course?: string; // alias for display
   institution_name: string;
+  institution?: string; // alias for display
   enrollment_status: string; // e.g., "ACTIVE"
 }
 
@@ -27,7 +30,45 @@ export interface IncomeRecord {
   citizen_id: string;
   applicant_name: string;
   annual_income: number;
+  annual_family_income?: number; // alias for display
+  certificate_number?: string;
+  income_certificate_no?: string;
   financial_year: string;
+}
+
+export interface FieldMappingRule {
+  sourceField: string;
+  sourceType: string;
+  canonicalModel: "CitizenProfile" | "EducationRecord" | "IncomeRecord";
+  canonicalField: string;
+  transformDescription?: string;
+  required?: boolean;
+}
+
+export interface MappingIssue {
+  type: "missing_field" | "unknown_field" | "unmapped_field";
+  department: string;
+  fieldName: string;
+  message: string;
+  severity: "error" | "warning";
+}
+
+export interface FieldTransformationTrace {
+  department: string;
+  sourceField: string;
+  mappingVersion: string;
+  canonicalModel: string;
+  canonicalField: string;
+  sourceValue: unknown;
+  transformedValue: unknown;
+}
+
+export interface SchemaNormalizationResult<T> {
+  canonical: T;
+  issues: MappingIssue[];
+  traces: FieldTransformationTrace[];
+  mappingVersion: string;
+  engineUsed: "deterministic" | "ai-assisted";
 }
 
 export interface EligibilityCriterion {

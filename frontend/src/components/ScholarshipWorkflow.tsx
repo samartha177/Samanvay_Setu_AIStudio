@@ -544,6 +544,105 @@ export function ScholarshipWorkflow() {
               {/* Final Application Details when complete */}
               {completedApplication && (
                 <div className="space-y-6">
+                  {/* Schema Normalization Stage Demonstration (Section 7) */}
+                  <div className="rounded-2xl border border-teal/40 bg-white p-6 shadow-panel">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div>
+                        <span className="text-[11px] font-bold uppercase tracking-wider text-teal">
+                          Schema Interoperability Stage
+                        </span>
+                        <h3 className="text-base font-bold text-ink">
+                          Heterogeneous Responses → Normalization → Canonical Models → Policy Engine
+                        </h3>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="rounded-md border border-teal/30 bg-teal/5 px-2.5 py-1 font-mono text-[11px] font-bold text-teal">
+                          mapping-registry-v1
+                        </span>
+                        <Link
+                          to="/admin/schema-mapper"
+                          className="text-xs font-semibold text-teal hover:underline"
+                        >
+                          Open Schema Mapper →
+                        </Link>
+                      </div>
+                    </div>
+                    <p className="mt-1.5 text-xs text-slate-600 leading-relaxed">
+                      "Departmental systems do not need to be replaced. SAMANVAYSETU adapts their existing data at the integration boundary."
+                    </p>
+
+                    {/* Step-by-step visual progression */}
+                    <div className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-6 text-xs">
+                      <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+                        <span className="font-bold text-slate-900 block">1. Identity Response</span>
+                        <p className="mt-1 font-mono text-[10px] text-slate-600">
+                          aadhaar_name<br/>
+                          dob<br/>
+                          citizen_id
+                        </p>
+                        <span className="mt-2 inline-block rounded bg-emerald-100 px-1.5 py-0.5 text-[9px] font-bold text-emerald-800">
+                          RECEIVED
+                        </span>
+                      </div>
+
+                      <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+                        <span className="font-bold text-slate-900 block">2. Education Response</span>
+                        <p className="mt-1 font-mono text-[10px] text-slate-600">
+                          studentName<br/>
+                          course<br/>
+                          enrollment_status
+                        </p>
+                        <span className="mt-2 inline-block rounded bg-emerald-100 px-1.5 py-0.5 text-[9px] font-bold text-emerald-800">
+                          RECEIVED
+                        </span>
+                      </div>
+
+                      <div className="rounded-xl border border-slate-200 bg-slate-50 p-3">
+                        <span className="font-bold text-slate-900 block">3. Income Response</span>
+                        <p className="mt-1 font-mono text-[10px] text-slate-600">
+                          annual_family_income<br/>
+                          income_cert_no<br/>
+                          financial_year
+                        </p>
+                        <span className="mt-2 inline-block rounded bg-emerald-100 px-1.5 py-0.5 text-[9px] font-bold text-emerald-800">
+                          RECEIVED
+                        </span>
+                      </div>
+
+                      <div className="rounded-xl border border-teal/40 bg-teal/10 p-3">
+                        <span className="font-bold text-teal block">4. Schema Normalization</span>
+                        <p className="mt-1 text-[10px] text-slate-700">
+                          Authoritative mapping-registry-v1 applies field translation rules.
+                        </p>
+                        <span className="mt-2 inline-block rounded bg-teal/20 px-1.5 py-0.5 text-[9px] font-bold text-teal">
+                          NORMALIZED
+                        </span>
+                      </div>
+
+                      <div className="rounded-xl border border-indigo-200 bg-indigo-50/60 p-3">
+                        <span className="font-bold text-indigo-900 block">5. Canonical Models</span>
+                        <p className="mt-1 text-[10px] text-slate-700">
+                          CitizenProfile<br/>
+                          EducationRecord<br/>
+                          IncomeRecord
+                        </p>
+                        <span className="mt-2 inline-block rounded bg-indigo-100 px-1.5 py-0.5 text-[9px] font-bold text-indigo-800">
+                          STRUCTURED
+                        </span>
+                      </div>
+
+                      <div className="rounded-xl border border-emerald-200 bg-emerald-50/60 p-3">
+                        <span className="font-bold text-emerald-900 block">6. Eligibility Engine</span>
+                        <p className="mt-1 text-[10px] text-slate-700">
+                          Deterministic rules evaluated against canonical models.
+                        </p>
+                        <span className="mt-2 inline-block rounded bg-emerald-600 px-1.5 py-0.5 text-[9px] font-bold text-white">
+                          EVALUATED
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+
                   {/* Outcome Banner */}
                   <div
                     className={`rounded-2xl border p-6 shadow-panel ${

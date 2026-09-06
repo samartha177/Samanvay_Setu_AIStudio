@@ -23,5 +23,5 @@ body {
 }
 
 .nav-link-active {
-  @apply bg-teal/10 text-teal;
+  @apply bg-teal/10 font-bold text-teal shadow-sm border border-teal/20;
 }
