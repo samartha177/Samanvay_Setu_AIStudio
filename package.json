@@ -10,6 +10,7 @@
     "dev": "npm --prefix frontend run dev",
     "build": "npm --prefix frontend run build && rm -rf dist && cp -r frontend/dist dist",
     "preview": "npm --prefix frontend run preview",
-    "lint": "npm --prefix frontend run build"
+    "lint": "npm --prefix frontend run build",
+    "test": "bun test frontend/src/tests/"
   }
 }
