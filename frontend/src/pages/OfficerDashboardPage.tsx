@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
+import { useAuth } from "../contexts/AuthContext";
 import { usePlatform } from "../contexts/PlatformContext";
 import { fetchApplicationsList } from "../services/api";
 import { MAPPING_REGISTRY_VERSION } from "../services/mappingRegistry";
 import type { CanonicalScholarshipApplication } from "../types/canonical";
 
 export function OfficerDashboardPage() {
+  const { user } = useAuth();
   const { isGatewayOnline, isDemoMode } = usePlatform();
   const [applications, setApplications] = useState<CanonicalScholarshipApplication[]>([]);
   const [loading, setLoading] = useState(true);
@@ -62,6 +64,14 @@ export function OfficerDashboardPage() {
           <h1 className="mt-1 text-2xl font-bold tracking-tight text-ink md:text-3xl">
             Government Interoperability Control Center
           </h1>
+          <div className="mt-1.5 flex items-center gap-2">
+            <span className="rounded bg-navy/10 px-2.5 py-0.5 font-mono text-xs font-bold text-navy">
+              Officer ID: {user?.id || "OFF-1001"}
+            </span>
+            <span className="text-xs text-slate-500">
+              ({user?.name || "Officer S. Ramanathan"})
+            </span>
+          </div>
           <p className="mt-1 text-sm text-slate-600">
             Monitor consented workflows, departmental health and interoperability transactions.
           </p>
