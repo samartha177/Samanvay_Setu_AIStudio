@@ -1,0 +1,15 @@
+{
+  "name": "samanvaysetu",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "workspaces": [
+    "frontend"
+  ],
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "build": "npm --prefix frontend run build && rm -rf dist && cp -r frontend/dist dist",
+    "preview": "npm --prefix frontend run preview",
+    "lint": "npm --prefix frontend run build"
+  }
+}
