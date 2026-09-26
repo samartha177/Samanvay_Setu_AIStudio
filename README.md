@@ -1,7 +1,9 @@
 # SAMANVAYSETU — Innovexa
 ## 🚀 Live Demo
 
-[Check out the Live Prototype](https://samanvay-setu.ai.studio/citizen)   
+[##Check out the Live Prototype](https://samanvay-setu.ai.studio/citizen)  
+
+
 Functional prototype for Smart India Hackathon 2026, problem statement **SIH26129**: interoperable government digital services without replacing departmental platforms.
 
 SAMANVAYSETU demonstrates one end-to-end service: a citizen submits a scholarship application; the platform collects consented identity, education, and income records from independent mock departments; transforms differing schemas into one canonical model; validates eligibility; and submits the final result to the scholarship department.
