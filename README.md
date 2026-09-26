@@ -1,7 +1,7 @@
 # SAMANVAYSETU — Innovexa
 ## 🚀 Live Demo
 
-[##Check out the Live Prototype](https://samanvay-setu.ai.studio/citizen)  
+[here's the prototype.👈](https://samanvay-setu.ai.studio/citizen)  
 
 
 Functional prototype for Smart India Hackathon 2026, problem statement **SIH26129**: interoperable government digital services without replacing departmental platforms.
